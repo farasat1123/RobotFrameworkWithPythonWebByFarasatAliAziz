@@ -1,0 +1,9 @@
+datasources:6cbb21ee9a8aacad42f132103d2af4f78400fa0d
+commandlineoptions:9f8598a690c7367accf83ead504756ddd374acc9
+suitesfrom:no-suites-from-option
+file:1c07ccd22ba2ae984f3806e0a42cacfb658839fa
+--suite Suites.ForLoops testcases
+--suite Suites.Innovation drag drop TestCases
+--suite Suites.InnovationAutomationFoamTestCases
+--suite Suites.InnovationIframeKeywordsTestCases
+--suite Suites.InnovationFoamTestCases

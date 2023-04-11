@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.10.6 on win32)" generated="20230105 21:39:29.512" rpa="false" schemaversion="3">
+<suite id="s1" name="DBTesting" source="C:\Users\Farasat Aziz\Downloads\New folder\robot-framework-with-python-web-master\TestCases\DBTesting.robot">
+<kw name="Connect To Database" library="DatabaseLibrary" type="SETUP">
+<arg>pymysql</arg>
+<arg>${DBName}</arg>
+<arg>${DBUser}</arg>
+<arg>${DBPass}</arg>
+<arg>${DBHost}</arg>
+<arg>${DBPort}</arg>
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using `dbName`, `dbUsername`, and `dbPassword`.</doc>
+<msg timestamp="20230105 21:39:29.582" level="INFO">Connecting using : pymysql.connect(db=mydb, user=root, passwd=root, host=localhost, port=3306, charset=None) </msg>
+<status status="PASS" starttime="20230105 21:39:29.565" endtime="20230105 21:39:29.594"/>
+</kw>
+<test id="s1-t1" name="Create table person" line="22">
+<kw name="Execute Sql Script" library="DatabaseLibrary">
+<var>${output}</var>
+<arg>./TestData/create_table_person.sql</arg>
+<doc>Executes the content of the `sqlScriptFileName` as SQL commands. Useful for setting the database to a known
+state before running your tests, or clearing out your test data after running each a test. Set optional input
+`sansTran` to True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20230105 21:39:29.597" level="INFO">Executing : Execute SQL Script  |  ./TestData/create_table_person.sql </msg>
+<msg timestamp="20230105 21:39:29.623" level="INFO">${output} = None</msg>
+<status status="PASS" starttime="20230105 21:39:29.596" endtime="20230105 21:39:29.623"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${output}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230105 21:39:29.624" endtime="20230105 21:39:29.624"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${output}</arg>
+<arg>None</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230105 21:39:29.624" level="INFO">Argument types are:
+&lt;class 'NoneType'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230105 21:39:29.624" endtime="20230105 21:39:29.624"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.596" endtime="20230105 21:39:29.624"/>
+</test>
+<test id="s1-t2" name="Inserting data in persons table" line="27">
+<kw name="Execute Sql Script" library="DatabaseLibrary">
+<var>${output}</var>
+<arg>./TestData/mydb_person_insertData.sql</arg>
+<doc>Executes the content of the `sqlScriptFileName` as SQL commands. Useful for setting the database to a known
+state before running your tests, or clearing out your test data after running each a test. Set optional input
+`sansTran` to True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20230105 21:39:29.626" level="INFO">Executing : Execute SQL Script  |  ./TestData/mydb_person_insertData.sql </msg>
+<msg timestamp="20230105 21:39:29.630" level="INFO">${output} = None</msg>
+<status status="PASS" starttime="20230105 21:39:29.625" endtime="20230105 21:39:29.630"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${output}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230105 21:39:29.631" endtime="20230105 21:39:29.631"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${output}</arg>
+<arg>None</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230105 21:39:29.632" level="INFO">Argument types are:
+&lt;class 'NoneType'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230105 21:39:29.632" endtime="20230105 21:39:29.632"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.625" endtime="20230105 21:39:29.632"/>
+</test>
+<test id="s1-t3" name="Check David record present in Person Table" line="38">
+<kw name="Check If Exists In Database" library="DatabaseLibrary">
+<arg>select id from mydb.person</arg>
+<arg>where first_name="Jhon";</arg>
+<doc>Check if any row would be returned by given the input `selectStatement`. If there are no results, then this will
+throw an AssertionError. Set optional input `sansTran` to True to run command without an explicit transaction
+commit or rollback.</doc>
+<msg timestamp="20230105 21:39:29.634" level="INFO">Executing : Check If Exists In Database  |  select id from mydb.person </msg>
+<msg timestamp="20230105 21:39:29.634" level="INFO">Executing : Query  |  select id from mydb.person </msg>
+<status status="PASS" starttime="20230105 21:39:29.634" endtime="20230105 21:39:29.635"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.633" endtime="20230105 21:39:29.635"/>
+</test>
+<test id="s1-t4" name="Check Jio record Not present in Person Table" line="43">
+<kw name="Check If Not Exists In Database" library="DatabaseLibrary">
+<arg>select first_name from mydb.person where first_name= "Jio";</arg>
+<doc>This is the negation of `check_if_exists_in_database`.</doc>
+<msg timestamp="20230105 21:39:29.636" level="INFO">Executing : Check If Not Exists In Database  |  select first_name from mydb.person where first_name= "Jio"; </msg>
+<msg timestamp="20230105 21:39:29.636" level="INFO">Executing : Query  |  select first_name from mydb.person where first_name= "Jio"; </msg>
+<status status="PASS" starttime="20230105 21:39:29.636" endtime="20230105 21:39:29.637"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.635" endtime="20230105 21:39:29.637"/>
+</test>
+<test id="s1-t5" name="Check Person Table exists in mydb database" line="47">
+<kw name="Table Must Exist" library="DatabaseLibrary">
+<arg>person</arg>
+<doc>Check if the table given exists in the database. Set optional input `sansTran` to True to run command without an
+explicit transaction commit or rollback.</doc>
+<msg timestamp="20230105 21:39:29.638" level="INFO">Executing : Table Must Exist  |  person </msg>
+<msg timestamp="20230105 21:39:29.638" level="INFO">Executing : Row Count  |  SELECT * FROM information_schema.tables WHERE table_name='person' </msg>
+<status status="PASS" starttime="20230105 21:39:29.638" endtime="20230105 21:39:29.640"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.638" endtime="20230105 21:39:29.640"/>
+</test>
+<test id="s1-t6" name="Verify Row Count is Zero" line="51">
+<kw name="Row Count Is 0" library="DatabaseLibrary">
+<arg>Select * FROM mydb.person WHERE first_name = "Jio";</arg>
+<doc>Check if any rows are returned from the submitted `selectStatement`. If there are, then this will throw an
+AssertionError. Set optional input `sansTran` to True to run command without an explicit transaction commit or
+rollback.</doc>
+<msg timestamp="20230105 21:39:29.642" level="INFO">Executing : Row Count Is 0  |  Select * FROM mydb.person WHERE first_name = "Jio"; </msg>
+<msg timestamp="20230105 21:39:29.642" level="INFO">Executing : Row Count  |  Select * FROM mydb.person WHERE first_name = "Jio"; </msg>
+<status status="PASS" starttime="20230105 21:39:29.641" endtime="20230105 21:39:29.642"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.641" endtime="20230105 21:39:29.642"/>
+</test>
+<test id="s1-t7" name="Verify Row Count is Equal to some value" line="55">
+<kw name="Row Count Is Equal To X" library="DatabaseLibrary">
+<arg>Select * FROM mydb.person WHERE first_name = "David";</arg>
+<arg>1</arg>
+<doc>Check if the number of rows returned from `selectStatement` is equal to the value submitted. If not, then this
+will throw an AssertionError. Set optional input `sansTran` to True to run command without an explicit
+transaction commit or rollback.</doc>
+<msg timestamp="20230105 21:39:29.644" level="INFO">Executing : Row Count Is Equal To X  |  Select * FROM mydb.person WHERE first_name = "David";  |  1 </msg>
+<msg timestamp="20230105 21:39:29.644" level="INFO">Executing : Row Count  |  Select * FROM mydb.person WHERE first_name = "David"; </msg>
+<status status="PASS" starttime="20230105 21:39:29.643" endtime="20230105 21:39:29.644"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.643" endtime="20230105 21:39:29.644"/>
+</test>
+<test id="s1-t8" name="Verify Row count is greate then some value" line="59">
+<kw name="Row Count Is Greater Than X" library="DatabaseLibrary">
+<arg>Select * FROM mydb.person WHERE first_name = "David";</arg>
+<arg>0</arg>
+<doc>Check if the number of rows returned from `selectStatement` is greater than the value submitted. If not, then
+this will throw an AssertionError. Set optional input `sansTran` to True to run command without an explicit
+transaction commit or rollback.</doc>
+<msg timestamp="20230105 21:39:29.646" level="INFO">Executing : Row Count Is Greater Than X  |  Select * FROM mydb.person WHERE first_name = "David";  |  0 </msg>
+<msg timestamp="20230105 21:39:29.646" level="INFO">Executing : Row Count  |  Select * FROM mydb.person WHERE first_name = "David"; </msg>
+<status status="PASS" starttime="20230105 21:39:29.645" endtime="20230105 21:39:29.646"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.645" endtime="20230105 21:39:29.646"/>
+</test>
+<test id="s1-t9" name="Verify that Row count is less then some value" line="63">
+<kw name="Row Count Is Less Than X" library="DatabaseLibrary">
+<arg>Select * FROM mydb.person WHERE first_name = "David";</arg>
+<arg>5</arg>
+<doc>Check if the number of rows returned from `selectStatement` is less than the value submitted. If not, then this
+will throw an AssertionError. Set optional input `sansTran` to True to run command without an explicit
+transaction commit or rollback.</doc>
+<msg timestamp="20230105 21:39:29.648" level="INFO">Executing : Row Count Is Less Than X  |  Select * FROM mydb.person WHERE first_name = "David";  |  5 </msg>
+<msg timestamp="20230105 21:39:29.648" level="INFO">Executing : Row Count  |  Select * FROM mydb.person WHERE first_name = "David"; </msg>
+<status status="PASS" starttime="20230105 21:39:29.648" endtime="20230105 21:39:29.648"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.647" endtime="20230105 21:39:29.649"/>
+</test>
+<test id="s1-t10" name="Update record in person table" line="67">
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<var>${output}</var>
+<arg>update mydb.person set first_name="Jio" where id="1";</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20230105 21:39:29.650" level="INFO">Executing : Execute SQL String  |  update mydb.person set first_name="Jio" where id="1"; </msg>
+<msg timestamp="20230105 21:39:29.650" level="INFO">${output} = None</msg>
+<status status="PASS" starttime="20230105 21:39:29.649" endtime="20230105 21:39:29.650"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${output}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230105 21:39:29.650" endtime="20230105 21:39:29.650"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${output}</arg>
+<arg>None</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230105 21:39:29.651" level="INFO">Argument types are:
+&lt;class 'NoneType'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230105 21:39:29.651" endtime="20230105 21:39:29.651"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.649" endtime="20230105 21:39:29.651"/>
+</test>
+<test id="s1-t11" name="Retrive Records from Person Table" line="73">
+<kw name="Query" library="DatabaseLibrary">
+<var>@{queryResults}</var>
+<arg>Select * FROM mydb.person;</arg>
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<msg timestamp="20230105 21:39:29.652" level="INFO">Executing : Query  |  Select * FROM mydb.person; </msg>
+<msg timestamp="20230105 21:39:29.652" level="INFO">@{queryResults} = [ (106, 'Jhon', 'Micheal') | (102, 'David', 'Micheal') | (103, 'Smith', 'Micheal') | (104, 'Marry', 'Micheal') | (105, 'Tye', 'Micheal') ]</msg>
+<status status="PASS" starttime="20230105 21:39:29.652" endtime="20230105 21:39:29.652"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>many @{queryResults}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230105 21:39:29.652" endtime="20230105 21:39:29.653"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.651" endtime="20230105 21:39:29.653"/>
+</test>
+<test id="s1-t12" name="Delete records from person table" line="78">
+<kw name="Execute Sql String" library="DatabaseLibrary">
+<var>${output}</var>
+<arg>Delete from mydb.person;</arg>
+<doc>Executes the sqlString as SQL commands. Useful to pass arguments to your sql. Set optional input `sansTran` to
+True to run command without an explicit transaction commit or rollback.</doc>
+<msg timestamp="20230105 21:39:29.654" level="INFO">Executing : Execute SQL String  |  Delete from mydb.person; </msg>
+<msg timestamp="20230105 21:39:29.657" level="INFO">${output} = None</msg>
+<status status="PASS" starttime="20230105 21:39:29.654" endtime="20230105 21:39:29.657"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${output}</arg>
+<arg>None</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230105 21:39:29.657" level="INFO">Argument types are:
+&lt;class 'NoneType'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230105 21:39:29.657" endtime="20230105 21:39:29.657"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.653" endtime="20230105 21:39:29.657"/>
+</test>
+<kw name="Disconnect From Database" library="DatabaseLibrary" type="TEARDOWN">
+<doc>Disconnects from the database.</doc>
+<msg timestamp="20230105 21:39:29.658" level="INFO">Executing : Disconnect From Database</msg>
+<status status="PASS" starttime="20230105 21:39:29.658" endtime="20230105 21:39:29.658"/>
+</kw>
+<status status="PASS" starttime="20230105 21:39:29.515" endtime="20230105 21:39:29.658"/>
+</suite>
+<statistics>
+<total>
+<stat pass="12" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="12" fail="0" skip="0" id="s1" name="DBTesting">DBTesting</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
