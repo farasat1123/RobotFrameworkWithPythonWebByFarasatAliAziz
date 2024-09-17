@@ -1,4 +1,4 @@
-#This file contains all the requirements for Robot Framework Python and selenium.
+# This file contains all the requirements for Robot Framework Python and selenium.
 
 1. Download Python latest version:
    https://www.python.org/downloads/
